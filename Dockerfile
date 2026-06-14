@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lts/ubuntu:25.04
+FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 ARG USER
@@ -24,6 +24,7 @@ RUN TZ="Etc/UTC" \
 RUN apt-get update && apt-get install -y \
 	apt-transport-https \
 	apt-utils \
+	fuseext2 \
 	build-essential \
 	chrpath \
 	curl \
@@ -39,6 +40,7 @@ RUN apt-get update && apt-get install -y \
 	iputils-ping \
 	locales \
 	liblz4-tool \
+	libsdl1.2-dev \
 	openssh-client \
 	python3 \
 	python3-git \
@@ -53,6 +55,7 @@ RUN apt-get update && apt-get install -y \
 	unzip \
 	vim \
 	wget \
+	xterm \
 	xz-utils \
 	zstd \
 	autoconf \
