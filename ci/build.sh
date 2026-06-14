@@ -29,8 +29,19 @@ sudo apt-get install -y --no-install-recommends \
   g++ \
   libprotobuf-dev \
   protobuf-compiler \
-  libglib2.0-dev
+  libglib2.0-dev \
+  python3 \
+  python3-pip \
+  nanopb \
+  libnanopb-dev
 
+# Install nanopb generator (provides protoc-gen-nanopb)
+python3 -m pip install --user nanopb --break-system-packages
+
+# Ensure protoc-gen-nanopb is in PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+echo "Effective BUILD_ARGS=${BUILD_ARGS}"
 
 WORKSPACE="${GITHUB_WORKSPACE:-$(pwd)}"
 cd "${WORKSPACE}"
@@ -39,7 +50,10 @@ rm -rf build || true
 mkdir -p build
 
 autoreconf -fi
-./configure ${BUILD_ARGS}
+./configure ${BUILD_ARGS} \
+  CFLAGS="-I/usr/include/nanopb" \
+  CXXFLAGS="-I/usr/include/nanopb" \
+  CPPFLAGS="-I/usr/include/nanopb"
 make -j"$(nproc)"
 make DESTDIR="${WORKSPACE}/build" install
 
