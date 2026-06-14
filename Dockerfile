@@ -1,5 +1,4 @@
 FROM ubuntu:24.04
-
 ENV DEBIAN_FRONTEND=noninteractive
 ARG USER
 ARG USER_ID
@@ -21,10 +20,7 @@ RUN TZ="Etc/UTC" \
     echo $TZ > /etc/timezone
 
 # Install required dependencies
-RUN apt-get update && apt-get install -y \
-	apt-transport-https \
-	apt-utils \
-	fuseext2 \
+RUN apt-get update && apt install -y apt-transport-https apt-utils fuseext2 \
 	build-essential \
 	chrpath \
 	curl \
@@ -67,17 +63,20 @@ RUN apt-get update && apt-get install -y \
 	nanopb \
 	libnanopb-dev \
 	libglib2.0-dev \
-	&& rm -rf /var/lib/apt/lists/*
+	&& rm -rf -- /var/lib/apt/lists/*
 
 # Install Python packages
 RUN pip install --no-cache-dir requests kas==4.7 --break-system-packages
+
+# Set python default
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
 # Ensure /bin/sh points to bash
 RUN ln -sf /bin/bash /bin/sh
 
 # Locale
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y locales && \
+	apt-get install --no-install-recommends -y --allow-downgrades locales && \
     rm -rf /var/lib/apt/lists/* && \
     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     echo 'LANG="en_US.UTF-8"' > /etc/default/locale && \
