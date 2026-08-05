@@ -108,7 +108,8 @@ AC_CONFIG_FILES([             \
         examples/SessionClient/Makefile \
         utils/Makefile \
 		sessionlogger/Makefile  \
-        sensing-hub.pc
+        sensinghub.pc
+        sensinghub-cpp.pc
                ])
 AC_OUTPUT
 
