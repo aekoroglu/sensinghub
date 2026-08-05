@@ -5,8 +5,8 @@
 # Requires autoconf tool later than 2.61
 AC_PREREQ(2.61)
 
-# Initialize the sensors package version 1.0.0
-AC_INIT([sensing-hub], 1.0.0)
+# Initialize the sensors package version 2.2.2
+AC_INIT([sensinghub], 2.2.2)
 
 # Does not strictly follow GNU Coding standards
 AM_INIT_AUTOMAKE([foreign subdir-objects dist-bzip2 tar-pax])
@@ -108,7 +108,7 @@ AC_CONFIG_FILES([             \
         examples/SessionClient/Makefile \
         utils/Makefile \
 		sessionlogger/Makefile  \
-        sensing-hub.pc
+        sensinghub.pc
                ])
 AC_OUTPUT
 
